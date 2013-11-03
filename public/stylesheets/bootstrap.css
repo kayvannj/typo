@@ -614,7 +614,7 @@ label {
   line-height: 18px;
   float: left;
   width: 130px;
-  text-align: right;
+  text-align: left;
   color: #404040;
 }
 form .input {

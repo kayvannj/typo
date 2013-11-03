@@ -28,6 +28,10 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def edit
+    #if current_user.is_admin?
+      @admin_edit = true
+    #end
+
     @article = Article.find(params[:id])
     unless @article.access_by? current_user
       redirect_to :action => 'index'
