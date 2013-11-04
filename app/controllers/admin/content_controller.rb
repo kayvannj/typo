@@ -34,8 +34,9 @@ class Admin::ContentController < Admin::BaseController
       flash[:error] = _("Error, you are not allowed to perform this action")
       return
     end
-    
-    @admin_edit = true
+    if (current_user.admin?) 
+      @admin_edit = true
+    end
     
     new_or_edit
   end
