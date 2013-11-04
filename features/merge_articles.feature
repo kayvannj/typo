@@ -6,16 +6,15 @@ Feature: Merge Two Articles
 	Background:
 		Given the blog is set up
 
-	Scenario: 1- non-admin merge permission
+	Scenario: A non-admin cannot merge two articles
 		Given I am logged in as publisher
-		Then the edit page of article 1 should not contain merge form
-		Given I am logged in as contirbutor
-		Then the edit page of article 1 should not contain merge form
+		Then the edit article page for "article 1" should not contain merge form
 
-	Scenario: 2- merge article content
-		Given I have merged article 1 and article 2
-		When I view the merged article page 
-		Then I should see content of both articles
+	Scenario: When articles are merged, the merged article should contain the text of both previous articles
+		Given I am logged in as admin
+		When I merge "article 1" and "article 2"
+		Then I should see "Merge was successful."
+		Then I should see content of "article 1" and "article 2"
 	
 	Scenario: 3- merge article author
 		Given I have merged two articles
@@ -24,8 +23,8 @@ Feature: Merge Two Articles
 		Then I should see either one of authors
 	
 	Scenario: 4- carying comments to merge article
-		Given I have comments on article 1 and article 2
-		When I have merge article 1 and article 2
+		Given I have comments on "article 1" and "article 2"
+		When I have merge "article 1" and "article 2"
 		And I view the merged article
 		Then I should see comments from both articles
 	

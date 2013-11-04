@@ -36,17 +36,32 @@ Given /^the blog is set up$/ do
                                    :base_url => 'http://localhost:3000'});
   Blog.default.save!
   User.create!({:login => 'admin',
-                :password => 'aaaaaaaa',
-                :email => 'joe@snow.com',
+                :password => '123123',
+                :email => 'admin@kayvan.com',
                 :profile_id => 1,
                 :name => 'admin',
                 :state => 'active'})
+  User.create!({:login => 'publisher',
+                :password => '123123',
+                :email => 'publisher@kayvan.com',
+                :profile_id => 2,
+                :name => 'publisher',
+                :state => 'active'})
+  User.create!({:login => 'contirbutor',
+                :password => '123123',
+                :email => 'contirbutor@kayvan.com',
+                :profile_id => 2,
+                :name => 'contirbutor',
+                :state => 'active'})
+  Article.create!({:id=>1, :type => 'Article',:title => 'article 1',:author => 'publisher',:body => 'article 1 body',:extended => '',:excerpt => '',:created_at => '2013-11-3 09:55:00 UTC',:updated_at => '2013-11-3 09:55:00 UTC',:user_id => 3,:permalink => 'article 3',:guid => '1bf3e2ca-ed7b-4562-8a4a-8ce843882222',:text_filter_id => 5,:whiteboard => '',:name => '',:published => true,:allow_pings => true,:allow_comments => true,:published_at => '2013-11-3 09:55:00 UTC',:state => 'published',:settings => {'password' => nil},:post_type => "read"})
+  Article.create!({:id=>2, :type => 'Article',:title => 'article 2',:author => 'admin'    ,:body => 'article 2 body',:extended => '',:excerpt => '',:created_at => '2013-11-3 12:00:00 UTC',:updated_at => '2013-11-3 12:00:00 UTC',:user_id => 3,:permalink => 'article 4',:guid => '1bf3e2ca-ed7b-4562-8a4a-8ce843485315',:text_filter_id => 5,:whiteboard => '',:name => '',:published => true,:allow_pings => true,:allow_comments => true,:published_at => '2013-11-3 12:00:00 UTC',:state => 'published',:settings => {'password' => nil},:post_type => "read"})
+
 end
 
 And /^I am logged into the admin panel$/ do
   visit '/accounts/login'
   fill_in 'user_login', :with => 'admin'
-  fill_in 'user_password', :with => 'aaaaaaaa'
+  fill_in 'user_password', :with => '123123'
   click_button 'Login'
   if page.respond_to? :should
     page.should have_content('Login successful')
