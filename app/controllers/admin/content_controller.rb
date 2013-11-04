@@ -48,11 +48,14 @@ class Admin::ContentController < Admin::BaseController
       flash[:error] = _("Error, you are not allowed to perform this action")
       return
     end
+
     id = params[:id]
     merge_id = params[:merge_with]
 
     begin
-      merge_article = Article.find(merge_id)
+      if (current_user.admin?) 
+        merge_article = Article.find(merge_id)
+      end
     rescue ActiveRecord::RecordNotFound
       redirect_to "/admin/content/edit/#{params[:id]}"
       flash[:error] = _('Sorry, Couldnt find the specified article.')
