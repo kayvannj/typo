@@ -28,17 +28,44 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def edit
-    #if current_user.is_admin?
-      @admin_edit = true
-    #end
-
     @article = Article.find(params[:id])
     unless @article.access_by? current_user
       redirect_to :action => 'index'
       flash[:error] = _("Error, you are not allowed to perform this action")
       return
     end
+    
+    @admin_edit = true
+    
     new_or_edit
+  end
+
+  def merge
+    @article = Article.find(params[:id])
+    unless @article.access_by? current_user
+      redirect_to :action => 'index'
+      flash[:error] = _("Error, you are not allowed to perform this action")
+      return
+    end
+    id = params[:id]
+    merge_id = params[:merge_id]
+
+    begin
+      merge_article = Article.find(merge_id)
+    rescue ActiveRecord::RecordNotFound
+      redirect_to "/admin/content/edit/#{params[:id]}"
+      flash[:error] = _('Sorry, Couldnt find the specified article.')
+      return
+    end
+        
+    redirect_to "/admin/content/edit/#{params[:id]}"
+  
+    if @article.merge_with merge_article
+      flash[:notice] = _('Merge was successful.')
+      return  
+    end
+    flash[:error] = _('Something bad happend, please try again  .')
+
   end
 
   def destroy
@@ -147,6 +174,7 @@ class Admin::ContentController < Admin::BaseController
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
     @article = Article.get_or_build_article(id)
+
     @article.text_filter = current_user.text_filter if current_user.simple_editor?
 
     @post_types = PostType.find(:all)
@@ -186,6 +214,7 @@ class Admin::ContentController < Admin::BaseController
     @macros = TextFilter.macro_filters
     render 'new'
   end
+
 
   def set_the_flash
     case params[:action]

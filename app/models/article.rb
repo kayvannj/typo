@@ -71,6 +71,28 @@ class Article < Content
     end
   end
 
+  def merge_with(merge_id)
+    #TODO HW5
+    if(self.id == merge_id)
+      return false
+    end
+
+    @merge_article = Article.find_by_id(merge_id)
+
+    @merge_article.comments.each do |comment|
+      self.comments << comment
+    end      
+    
+    self.body += @merge_article.body
+
+    self.save!
+
+    Article.delete(merge_id)
+    
+    return true
+      
+  end
+
   def set_permalink
     return if self.state == 'draft'
     self.permalink = self.title.to_permalink if self.permalink.nil? or self.permalink.empty?
