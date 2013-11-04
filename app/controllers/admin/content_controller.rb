@@ -48,7 +48,7 @@ class Admin::ContentController < Admin::BaseController
       return
     end
     id = params[:id]
-    merge_id = params[:merge_id]
+    merge_id = params[:merge_with]
 
     begin
       merge_article = Article.find(merge_id)

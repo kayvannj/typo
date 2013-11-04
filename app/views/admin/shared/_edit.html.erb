@@ -11,9 +11,9 @@
     <div class="col-lg-6">
       	<%= form_tag :controller => admin_content_path, :method => 'post', :action => 'merge' ,:id => @article.id do %>
 	        <label class="">Article ID </label>
-	        <input type="text" class="form-control" name="merge_id" id="merge_id">
+	        <input type="text" class="form-control" name="merge_with" id="merge_with">
 	        <br>
-	        <input type="submit" class="btn btn-default" id="merge_button" value="Merge"> 
+	        <input type="submit" class="btn btn-default" id="merge_button" name="Merge Articles" value="Merge Articles"> 
 		<% end %>        
     </div><!-- /.col-lg-6 -->
   </div>

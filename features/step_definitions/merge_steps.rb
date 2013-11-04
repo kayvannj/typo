@@ -19,7 +19,7 @@ end
 
 When /^I merge "(.*)" and "(.*)"$/ do |arg1, arg2|
   visit "/admin/content/edit/#{Article.find_by_title(arg1).id}"
-  fill_in 'merge_id', :with => Article.find_by_title(arg2).id
+  fill_in 'merge_with', :with => Article.find_by_title(arg2).id
   click_button 'merge_button'
 end
 
